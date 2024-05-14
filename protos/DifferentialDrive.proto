@@ -1,0 +1,153 @@
+PROTO DifferentialDrive [
+  field SFString controller "void"
+  field SFVec3f    translation  0 0 0
+  field SFRotation rotation     0 0 1 0
+]
+{
+  Robot {
+  translation IS translation
+  rotation IS rotation
+  controller IS controller
+  translation 0.1 0 0.016
+  children [
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0.1
+        roughness 0.8
+        metalness 0.8
+      }
+      geometry Box {
+        size 0.05 0.04 0.012
+      }
+    }
+    DEF MARKER Solid {
+      translation -0.0251 0 0
+      rotation 0.5773509358560258 -0.577349935856137 -0.577349935856137 2.09439
+      scale 0.01 0.01 0.01
+      children [
+        Shape {
+          appearance Appearance {
+            texture ImageTexture {
+              url [
+                "https://raw.githubusercontent.com/usermech/Aruco-Marker/main/tag.png"
+              ]
+            }
+          }
+          geometry Plane {
+          }
+        }
+      ]
+      name "solid(3)"
+    }
+    DEF LEFT_WHEEL HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor -0.01 0.025 -0.005
+      }
+      device [
+        PositionSensor {
+          name "left_encoder"
+        }
+        RotationalMotor {
+          name "left_wheel"
+        }
+      ]
+      endPoint Solid {
+        translation -0.009999888484982032 0.025000000127028372 -0.005000099439833778
+        rotation 0.9999997696647768 0.0004799317040742417 0.0004799332795700027 4.712385076375165
+        children [
+          DEF WHEEL Shape {
+            appearance PBRAppearance {
+              baseColor 0.1 0.1 0.2
+              roughness 1
+              metalness 0.5
+            }
+            geometry Cylinder {
+              height 0.01
+              radius 0.01
+            }
+          }
+        ]
+        contactMaterial "wheel"
+        boundingObject USE WHEEL
+        physics Physics {
+        }
+      }
+    }
+    DEF RIGHT_WHEEL HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor -0.01 0.025 -0.005
+      }
+      device [
+        PositionSensor {
+          name "right_encoder"
+        }
+        RotationalMotor {
+          name "right_wheel"
+        }
+      ]
+      endPoint Solid {
+        translation -0.009999888155424859 -0.024999999858668305 -0.005000099208391802
+        rotation 0.9999997696647757 0.0004799278496072776 0.0004799371362024003 4.71238508154896
+        children [
+          USE WHEEL
+        ]
+        name "solid(1)"
+        contactMaterial "wheel"
+        boundingObject USE WHEEL
+        physics Physics {
+        }
+      }
+    }
+    DEF CASTER BallJoint {
+      jointParameters BallJointParameters {
+        anchor 0.015 0 -0.0105
+      }
+      jointParameters2 JointParameters {
+      }
+      jointParameters3 JointParameters {
+        axis 0 1 0
+      }
+      endPoint Solid {
+        translation 0.015 0 -0.0105
+        rotation -0.7308177612888668 0.5527072883336128 -0.40052472234262093 4.901284466430541
+        children [
+          DEF CASTER Shape {
+            appearance PBRAppearance {
+            }
+            geometry Sphere {
+              radius 0.0045
+            }
+          }
+        ]
+        name "solid(2)"
+        boundingObject USE CASTER
+        physics Physics {
+        }
+      }
+    }
+    Camera {
+      translation 0.025 0 0.006
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.5 0.5 0.5
+            roughness 0.5
+          }
+          geometry Capsule {
+            height 0.003
+            radius 0.001
+          }
+        }
+      ]
+      width 640
+      height 480
+    }
+  ]
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "aruco_read"
+}
+}

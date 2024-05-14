@@ -1,0 +1,291 @@
+#VRML_SIM R2023a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/appearances/protos/Rubber.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.2315922100484749 -0.5106557225937274 0.8280071142370342 5.337539844131444
+  position -2.2406975797622084 1.440944044603647 1.7221110290165986
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 2 2
+}
+Robot {
+  translation -0.83 0 0.016
+  children [
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        baseColor 0.7 0.7 0.7
+        roughness 0.8
+        metalness 0.8
+      }
+      geometry Box {
+        size 0.05 0.04 0.012
+      }
+    }
+    DEF LEFT_WHEEL HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor -0.01 0.025 -0.005
+      }
+      device [
+        PositionSensor {
+          name "left_encoder"
+        }
+        RotationalMotor {
+          name "left_wheel"
+        }
+      ]
+      endPoint Solid {
+        translation -0.009999888484982032 0.025000000127028372 -0.005000099439833778
+        rotation 0.9999997696647767 0.0004799317040742807 0.0004799332795700419 4.712385076375165
+        children [
+          DEF WHEEL Shape {
+            appearance Rubber {
+              type "dotted"
+            }
+            geometry Cylinder {
+              height 0.01
+              radius 0.01
+            }
+          }
+        ]
+        contactMaterial "wheel"
+        boundingObject USE WHEEL
+        physics Physics {
+        }
+      }
+    }
+    DEF RIGHT_WHEEL HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor -0.01 0.025 -0.005
+      }
+      device [
+        PositionSensor {
+          name "right_encoder"
+        }
+        RotationalMotor {
+          name "right_wheel"
+        }
+      ]
+      endPoint Solid {
+        translation -0.009999888155424859 -0.024999999858668305 -0.005000099208391802
+        rotation 0.9999997696647757 0.00047992784960747384 0.0004799371362024788 4.71238508154896
+        children [
+          USE WHEEL
+        ]
+        name "solid(1)"
+        contactMaterial "wheel"
+        boundingObject USE WHEEL
+        physics Physics {
+        }
+      }
+    }
+    DEF CASTER BallJoint {
+      jointParameters BallJointParameters {
+        anchor 0.015 0 -0.0105
+      }
+      jointParameters2 JointParameters {
+      }
+      jointParameters3 JointParameters {
+        axis 0 1 0
+      }
+      endPoint Solid {
+        translation 0.015 0 -0.0105
+        rotation -0.7308177612888664 0.5527072883336134 -0.40052472234262076 4.901284466430542
+        children [
+          DEF CASTER Shape {
+            appearance PBRAppearance {
+            }
+            geometry Sphere {
+              radius 0.0045
+            }
+          }
+        ]
+        name "solid(2)"
+        contactMaterial "caster"
+        boundingObject USE CASTER
+        physics Physics {
+        }
+      }
+    }
+    Camera {
+      translation 0.025 0 0.006
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.5 0.5 0.5
+            roughness 0.5
+          }
+          geometry Capsule {
+            height 0.003
+            radius 0.001
+          }
+        }
+      ]
+      width 1280
+      height 720
+    }
+    GPS {
+    }
+  ]
+  name "follower"
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "follow_ball"
+}
+Robot {
+  translation -0.62 0 0.026
+  children [
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        baseColor 0.7 0.1 0.1
+        roughness 0.8
+        metalness 0.8
+      }
+      geometry Box {
+        size 0.05 0.04 0.012
+      }
+    }
+    Solid {
+      translation -0.03 0 0
+      children [
+        DEF BALL Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            roughness 1
+            metalness 0
+          }
+          geometry Sphere {
+            radius 0.01
+          }
+        }
+      ]
+      name "solid(3)"
+      boundingObject USE BALL
+      physics Physics {
+      }
+    }
+    DEF LEFT_WHEEL HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor -0.01 0.025 -0.005
+      }
+      device [
+        PositionSensor {
+          name "left_encoder"
+        }
+        RotationalMotor {
+          name "left_wheel"
+        }
+      ]
+      endPoint Solid {
+        translation -0.009999888484982029 0.025000000127028372 -0.005000099439833778
+        rotation 0.9999997696647767 0.0004799317040742416 0.0004799332795700519 4.712385076375165
+        children [
+          DEF WHEEL Shape {
+            appearance Rubber {
+              type "dotted"
+            }
+            geometry Cylinder {
+              height 0.01
+              radius 0.01
+            }
+          }
+        ]
+        contactMaterial "wheel"
+        boundingObject USE WHEEL
+        physics Physics {
+        }
+      }
+    }
+    DEF RIGHT_WHEEL HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor -0.01 0.025 -0.005
+      }
+      device [
+        PositionSensor {
+          name "right_encoder"
+        }
+        RotationalMotor {
+          name "right_wheel"
+        }
+      ]
+      endPoint Solid {
+        translation -0.009999888155424859 -0.024999999858668305 -0.005000099208391802
+        rotation 0.9999997696647757 0.00047992784960746414 0.00047993713620246906 4.71238508154896
+        children [
+          USE WHEEL
+        ]
+        name "solid(1)"
+        contactMaterial "wheel"
+        boundingObject USE WHEEL
+        physics Physics {
+        }
+      }
+    }
+    DEF CASTER BallJoint {
+      jointParameters BallJointParameters {
+        anchor 0.015 0 -0.0105
+      }
+      jointParameters2 JointParameters {
+      }
+      jointParameters3 JointParameters {
+        axis 0 1 0
+      }
+      endPoint Solid {
+        translation 0.015 0 -0.0105
+        rotation -0.7308177612888664 0.5527072883336134 -0.40052472234262076 4.901284466430542
+        children [
+          DEF CASTER Shape {
+            appearance PBRAppearance {
+            }
+            geometry Sphere {
+              radius 0.0045
+            }
+          }
+        ]
+        name "solid(2)"
+        contactMaterial "caster"
+        boundingObject USE CASTER
+        physics Physics {
+        }
+      }
+    }
+    Camera {
+      translation 0.025 0 0.006
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.5 0.5 0.5
+            roughness 0.5
+          }
+          geometry Capsule {
+            height 0.003
+            radius 0.001
+          }
+        }
+      ]
+      width 1280
+      height 720
+    }
+    GPS {
+    }
+  ]
+  name "leader"
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "defined_path"
+}
